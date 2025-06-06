@@ -41,6 +41,12 @@ export const addWeeks = (date, weeks) => {
   return addDays(date, weeks * 7);
 };
 
+export const addMonths = (date, months) => {
+  const result = new Date(date);
+  result.setMonth(result.getMonth() + months);
+  return result;
+};
+
 export const isBefore = (date, compareDate) => {
   return date.getTime() < compareDate.getTime();
 };
