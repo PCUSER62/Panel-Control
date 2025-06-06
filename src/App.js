@@ -29,8 +29,8 @@ const App = () => {
     <div className="min-h-screen bg-gray-50 p-6">
       <div className="max-w-7xl mx-auto">
         <header className="mb-8 text-center">
-          <h1 className="text-4xl font-bold text-blue-800">PANEL</h1>
-          <h2 className="text-2xl font-semibold text-blue-600">Control de Proyectos y Servicios</h2>
+          <h1 className="text-4xl font-bold text-blue-800">PANEL CONTROL</h1>
+          <h2 className="text-2xl font-semibold text-blue-600">Proyectos y Servicios</h2>
         </header>
 
         {!selectedProject && !showNewProjectForm ? (
