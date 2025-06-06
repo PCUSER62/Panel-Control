@@ -8,6 +8,10 @@ const ProjectCard = ({ project, onClick }) => {
     "Planificado": "bg-blue-100 text-blue-800"
   };
 
+  const budget = Number(project.budget || 0);
+  const egress = Number(project.egress || 0);
+  const utilidad = budget === 0 ? 0 : ((budget - egress) / budget) * 100;
+
   return (
     <div 
       className="p-6 bg-white rounded-xl shadow-md hover:shadow-lg transition-shadow cursor-pointer"
@@ -38,19 +42,13 @@ const ProjectCard = ({ project, onClick }) => {
           <p className="text-xs text-gray-500">Presupuesto</p>
           <p className="text-sm font-medium">
             {project.currency === 'USD' ? '$' : 'S/.'} 
-            {Number(project.budget || 0).toLocaleString()}
+            {budget.toLocaleString()}
           </p>
         </div>
         <div>
           <p className="text-xs text-gray-500">Utilidad</p>
-          <p className="text-sm font-medium text-green-600">
-            {(() => {
-              const budget = Number(project.budget || 0);
-              const egress = Number(project.egress || 0);
-              if (budget === 0) return "0%";
-              const utilidad = ((budget - egress) / budget) * 100;
-              return utilidad.toFixed(2) + "%";
-            })()}
+          <p className={`text-sm font-medium ${utilidad < 0 ? 'text-red-600' : 'text-green-600'}`}>
+            {utilidad.toFixed(2)}%
           </p>
         </div>
       </div>
