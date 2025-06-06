@@ -38,14 +38,19 @@ const ProjectCard = ({ project, onClick }) => {
           <p className="text-xs text-gray-500">Presupuesto</p>
           <p className="text-sm font-medium">
             {project.currency === 'USD' ? '$' : 'S/.'} 
-            {project.budget.toLocaleString()}
+            {Number(project.budget || 0).toLocaleString()}
           </p>
         </div>
         <div>
           <p className="text-xs text-gray-500">Utilidad</p>
           <p className="text-sm font-medium text-green-600">
-            {project.currency === 'USD' ? '$' : 'S/.'} 
-            {(project.income - project.egress).toLocaleString()}
+            {(() => {
+              const budget = Number(project.budget || 0);
+              const egress = Number(project.egress || 0);
+              if (budget === 0) return "0%";
+              const utilidad = ((budget - egress) / budget) * 100;
+              return utilidad.toFixed(2) + "%";
+            })()}
           </p>
         </div>
       </div>
