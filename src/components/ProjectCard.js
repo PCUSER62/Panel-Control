@@ -8,6 +8,14 @@ const ProjectCard = ({ project, onClick }) => {
     "Planificado": "bg-blue-100 text-blue-800"
   };
 
+  // ✅ Calcular egresos sumados si existe lista de egresos
+  const egresos = Array.isArray(project.egressList)
+    ? project.egressList.reduce((total, e) => total + Number(e.amount || 0), 0)
+    : 0;
+
+  const budget = Number(project.budget || 0);
+  const utilidad = budget === 0 ? 0 : ((budget - egresos) / budget) * 100;
+
   return (
     <div 
       className="p-6 bg-white rounded-xl shadow-md hover:shadow-lg transition-shadow cursor-pointer"
@@ -38,15 +46,13 @@ const ProjectCard = ({ project, onClick }) => {
           <p className="text-xs text-gray-500">Presupuesto</p>
           <p className="text-sm font-medium">
             {project.currency === 'USD' ? '$' : 'S/.'} 
-            {Number(project.budget || 0).toLocaleString()}
+            {budget.toLocaleString()}
           </p>
         </div>
         <div>
           <p className="text-xs text-gray-500">Utilidad</p>
-          <p className="text-sm font-medium text-green-600">
-            {typeof project.utility === 'number'
-              ? project.utility.toFixed(2) + '%'
-              : '0.00%'}
+          <p className={`text-sm font-medium ${utilidad < 0 ? 'text-red-600' : 'text-green-600'}`}>
+            {utilidad.toFixed(2)}%
           </p>
         </div>
       </div>
